@@ -1,0 +1,301 @@
+/* ====== Hotel Reservation Prediction – External CSS ====== */
+/* Save as: static/style.css */
+
+/* ---------- Theme variables ---------- */
+:root{
+  --bg:        #0f1222;
+  --bg-2:      #171a2e;
+  --card:      #1f2340;
+  --text:      #e8ecff;
+  --muted:     #b8c0ff;
+  --accent:    #7c5cff;
+  --accent-2:  #56d1ff;
+  --danger:    #ff667d;
+  --success:   #5bd19f;
+
+  --radius: 14px;
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+  --ring:    0 0 0 3px color-mix(in oklab, var(--accent) 30%, transparent);
+}
+
+/* ---------- Reset-ish ---------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(124,92,255,.25), transparent 60%),
+    radial-gradient(800px 500px at 110% 10%, rgba(86,209,255,.18), transparent 55%),
+    linear-gradient(180deg, var(--bg), var(--bg-2));
+  display: grid;
+  place-items: center;
+  padding: 40px 18px;
+}
+
+/* ---------- Card container ---------- */
+.container{
+  width: min(900px, 100%);
+  background: color-mix(in oklab, var(--card) 88%, #000 12%);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: clamp(20px, 4vw, 38px);
+  backdrop-filter: blur(6px);
+  animation: cardIn .5s ease-out both;
+}
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(8px) scale(.995); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- Title ---------- */
+h2{
+  margin: 0 0 18px 0;
+  letter-spacing: .3px;
+  font-weight: 700;
+  font-size: clamp(22px, 2.6vw, 30px);
+  display: inline-block;
+  position: relative;
+}
+h2::after{
+  content:"";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border-radius: 999px;
+  opacity: .9;
+}
+
+/* ---------- Form layout ---------- */
+form{
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 14px 18px;
+}
+
+/* Full width on small, 6/12 on medium, 4/12 on large where it fits nicely */
+.form-group{
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 8px;
+}
+@media (min-width: 720px){
+  /* Make common pairs share rows for a tidy look */
+  #lead_time, #no_of_special_request,
+  #avg_price_per_room, #arrival_month,
+  #arrival_date, #market_segment_type,
+  #no_of_week_nights, #no_of_weekend_nights,
+  #type_of_meal_plan, #room_type_reserved {
+    /* no-op: target inputs for sizing via parent below */
+  }
+  .form-group:nth-of-type(1),
+  .form-group:nth-of-type(2),
+  .form-group:nth-of-type(3),
+  .form-group:nth-of-type(4),
+  .form-group:nth-of-type(5),
+  .form-group:nth-of-type(6),
+  .form-group:nth-of-type(7),
+  .form-group:nth-of-type(8),
+  .form-group:nth-of-type(9),
+  .form-group:nth-of-type(10){
+    grid-column: span 6;
+  }
+}
+
+/* Subtle interactive spotlight on focus within the group */
+.form-group:focus-within{
+  outline: none;
+  border-radius: calc(var(--radius) - 8px);
+  box-shadow: 0 0 0 0 rgba(0,0,0,0);
+  position: relative;
+}
+.form-group:focus-within::after{
+  content:"";
+  position: absolute;
+  inset: -3px;
+  border-radius: calc(var(--radius) - 6px);
+  pointer-events: none;
+  background: radial-gradient(240px 120px at 10% 10%, color-mix(in oklab, var(--accent) 25%, transparent), transparent 55%);
+  opacity: .55;
+  filter: saturate(120%);
+}
+
+/* ---------- Labels ---------- */
+label{
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* ---------- Inputs & selects ---------- */
+input[type="number"],
+select{
+  appearance: none;
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.03);
+  color: var(--text);
+  border-radius: 10px;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease, transform .08s ease;
+}
+
+/* Remove spin buttons (Chrome/Edge) */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button{
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Remove spin buttons (Firefox) */
+input[type="number"]{ -moz-appearance: textfield; }
+
+select{
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+    linear-gradient(135deg, var(--muted) 50%, transparent 50%),
+    linear-gradient(to right, transparent, transparent);
+  background-position:
+    calc(100% - 18px) calc(50% - 3px),
+    calc(100% - 13px) calc(50% - 3px),
+    calc(100% - 42px) 50%;
+  background-size:
+    6px 6px,
+    6px 6px,
+    1px 60%;
+  background-repeat: no-repeat;
+  padding-right: 44px;
+}
+
+input:focus,
+select:focus{
+  outline: none;
+  border-color: color-mix(in oklab, var(--accent) 60%, white 0%);
+  box-shadow: var(--ring);
+  background: rgba(255,255,255,.06);
+}
+
+input:hover,
+select:hover{
+  border-color: rgba(255,255,255,.24);
+}
+
+/* Invalid states if you use required + pattern/min/max in HTML */
+input:invalid,
+select:invalid{
+  border-color: color-mix(in oklab, var(--danger) 60%, transparent);
+}
+
+/* ---------- Submit button ---------- */
+button[type="submit"]{
+  grid-column: 1 / -1;
+  margin-top: 6px;
+  border: none;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  letter-spacing: .2px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #0b0d1a;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  box-shadow: 0 8px 24px rgba(124,92,255,.35);
+  transition: transform .08s ease, box-shadow .2s ease, filter .2s ease;
+  position: relative;
+  isolation: isolate;
+}
+button[type="submit"]::after{
+  /* Shine effect on hover */
+  content:"";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(300px 60px at 10% -20%, rgba(255,255,255,.35), transparent 35%),
+    radial-gradient(300px 60px at 90% 120%, rgba(255,255,255,.25), transparent 35%);
+  opacity: 0;
+  transition: opacity .25s ease;
+  border-radius: inherit;
+  z-index: -1;
+}
+button[type="submit"]:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px rgba(124,92,255,.45), 0 4px 10px rgba(0,0,0,.25);
+}
+button[type="submit"]:hover::after{ opacity: 1; }
+button[type="submit"]:active{ transform: translateY(0); }
+
+/* ---------- Result banner ---------- */
+.result{
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.12);
+  animation: fadeIn .3s ease-out both;
+}
+.result p{
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: .2px;
+}
+
+/* If you want color coding, add class in template:
+   <div class="result success"> or <div class="result danger"> */
+.result.success{
+  border-color: color-mix(in oklab, var(--success) 55%, transparent);
+  background: color-mix(in oklab, var(--success) 12%, transparent);
+}
+.result.danger{
+  border-color: color-mix(in oklab, var(--danger) 55%, transparent);
+  background: color-mix(in oklab, var(--danger) 10%, transparent);
+}
+
+@keyframes fadeIn{
+  from{ opacity: 0; transform: translateY(4px); }
+  to{ opacity: 1; transform: none; }
+}
+
+/* ---------- Subtle accessibility niceties ---------- */
+:focus-visible{
+  outline: 3px solid color-mix(in oklab, var(--accent) 65%, white 0%);
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+::selection{
+  background: color-mix(in oklab, var(--accent) 35%, var(--accent-2) 65%);
+  color: #0b0d1a;
+}
+
+/* ---------- Dark-mode friendly (optional) ---------- */
+@media (prefers-color-scheme: light){
+  :root{
+    --bg: #eef1ff;
+    --bg-2: #e6e9ff;
+    --card: #ffffff;
+    --text: #0e1330;
+    --muted: #4b5580;
+  }
+  body{
+    background:
+      radial-gradient(1200px 600px at 10% -10%, rgba(124,92,255,.15), transparent 60%),
+      radial-gradient(800px 500px at 110% 10%, rgba(86,209,255,.12), transparent 55%),
+      linear-gradient(180deg, var(--bg), var(--bg-2));
+  }
+  .container{ border: 1px solid rgba(10,20,50,.08); }
+  input, select{
+    background: #ffffff;
+    border-color: rgba(10,20,50,.15);
+  }
+  input:hover, select:hover{ border-color: rgba(10,20,50,.28); }
+  input:focus, select:focus{ background: #fff; }
+}
+
+/* ---------- Tiny helper: smooth form transitions ---------- */
+form, .form-group, input, select, button, .result { will-change: transform, box-shadow; }
