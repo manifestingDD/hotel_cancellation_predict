@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 
 # Copy all code 
-COPY .. 
+COPY . . 
 
 # Install the other depencies as if using setup.py
 RUN pip install --no-cache-dir -e .
