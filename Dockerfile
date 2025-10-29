@@ -9,9 +9,9 @@ ENV PYTHONDONTWRITEBYTECODE = 1 \
 WORKDIR /app
 
 # Install dependencies  <<< lightGBM needs some extra dependencies
-RUN apt-get update && apt-get-install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     libgom1 \
-    && apt-get-clean \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 

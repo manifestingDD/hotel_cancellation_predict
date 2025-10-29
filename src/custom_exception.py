@@ -15,7 +15,7 @@ class CustomException(Exception):
         @staticmethod >>> This function doesn't need self.anything
         It just takes inputs and returns a formatted string
         """
-        _, _, exc_tb = error_detail.exc_info() # keep only the trackback
+        _, _, exc_tb = traceback.sys.exc_info() # keep only the trackback
         file_name = exc_tb.tb_frame.f_code.co_filename # which file caused the error
         line_number = exc_tb.tb_lineno # Line number of code causing the error
 
