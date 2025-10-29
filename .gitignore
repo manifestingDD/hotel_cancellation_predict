@@ -2,3 +2,10 @@ venv/
 mlruns/
 logs/
 MLOPS_HOTEL_FORECAST.egg-info/
+
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+
+# Ignore compiled Cython files
+*.so
