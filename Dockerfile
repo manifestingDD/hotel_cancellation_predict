@@ -1,31 +1,29 @@
-# Grab a lightweight python image
-FROM python:slim   
+# syntax=docker/dockerfile:1
+# or 3.13-slim if you prefer
+FROM python:3.11-slim    
 
-# Avoid file overwriting and buffering
-ENV PYTHONDONTWRITEBYTECODE = 1 \
-    PYTHONUNBUFFERED = 1
+# No spaces around '=' for ENV
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
 
-# App directory created 
 WORKDIR /app
 
-# Install dependencies  <<< lightGBM needs some extra dependencies
+# LightGBM needs libgomp1 (note the 'p')
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libgom1 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    libgomp1 \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
+# Copy your project into the image
+COPY . .
 
-# Copy all code 
-COPY . . 
+# Install your package (editable ok for dev; for prod usually not -e)
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -e .
 
-# Install the other depencies as if using setup.py
-RUN pip install --no-cache-dir -e .
+# Expose Flask port (if your app really listens on 5000)
+EXPOSE 5000
 
-# Train the whole model
-RUN python pipeline/training_pipeline.py
-
-# Expose the port for flask app
-EXPOSE 5000 
-
-# Run the app
-CMD["python", "application.py"]
+# If you really want to train during container run, do it in ENTRYPOINT/CMD of a training image,
+# not during 'docker build'. For now just run the app:
+CMD ["python", "application.py"]
