@@ -81,7 +81,7 @@ pipeline{
                             --image=gcr.io/${GCP_PROJECT}/hotel-cancel-predict:latest \
                             --platform=managed \
                             --region='us-central-1' 
-                            --allow=unauthenticated
+                            --allow-unauthenticated
 
                         '''
                     }
