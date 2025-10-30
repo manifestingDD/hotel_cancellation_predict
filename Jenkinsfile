@@ -80,7 +80,7 @@ pipeline{
                         gcloud run deploy hotel-cancel-predict \
                             --image=gcr.io/${GCP_PROJECT}/hotel-cancel-predict:latest \
                             --platform=managed \
-                            --region='us-central1' 
+                            --region='us-central1' \
                             --allow-unauthenticated
 
                         '''
